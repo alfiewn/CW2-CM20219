@@ -55,7 +55,6 @@
             createCube();
             createEdgesCube();
 
-            
             createVerticesCube();
             scene.add(cube);
 
@@ -145,7 +144,7 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
-
+        //Task 3: Rotate the cube
         function rotateCube() {
             var SPEED = 0.02;
             cube.rotation.x += SPEED;
@@ -167,11 +166,14 @@
             verticesCube.rotation.z += SPEED;
         }
 
+        //Task 5: Translate the camera on a given axis
         function translateCameraOnAxis(axisVector, amount) {
             var cameraRotation = camera.quaternion; // camera's local rotation as a quaternion
             axisVector.applyQuaternion(cameraRotation); // apply the rotation to the z axis
             camera.position.add(axisVector.multiplyScalar(amount)); // add the resulting vector to the camera's position
         }
+
+        //Task 6: Orbit the camera around the cube
 
         //Orbit the camera on the horizontal axis
         function orbitCameraHorizontal(angle) {
@@ -193,6 +195,7 @@
             camera.lookAt(scene.position);
         }
 
+        //Task 7: Load the textures to apply to the cube
         function loadCubeTextures() {
 
             var textureLoader = new THREE.TextureLoader();
@@ -219,6 +222,7 @@
             return materials;
         }
 
+        //Task 8: Load the bunny mesh model and add it to the scene
         function loadBunny() {
             bunny = new THREE.OBJLoader();
 
@@ -233,6 +237,7 @@
             )
         }
 
+        //remove the bunny from the scene
         function removeBunny() {
             scene.remove(scene.getObjectByName('nameBunny'));
         }
@@ -277,7 +282,6 @@
                     scene.add(verticesCube);
                     break;
 
-                    // TO DO: add code for starting/stopping rotations (requirement 3).
                 case 82: //r = rotate
                     shouldRotateCube = !shouldRotateCube;
                     break;
