@@ -168,7 +168,7 @@
 
         function rotateBunny() {
             var SPEED = 0.02;
-            var object = scene.getObjectByName('nameBunny');
+            var object = scene.getObjectByName('Bunny');
             object.rotation.x += SPEED;
             object.rotation.y += SPEED;
             object.rotation.z += SPEED;
@@ -190,7 +190,7 @@
             var cameraZ = camera.position.z;
             camera.position.z = cameraZ * Math.cos(angle) - cameraX * Math.sin(angle);
             camera.position.x = cameraZ * Math.sin(angle) + cameraX * Math.cos(angle);
-            camera.lookAt(scene.position);
+            camera.lookAt(0,0,0);
         }
 
         //Orbit the camera on the vertical axis
@@ -200,7 +200,7 @@
             var cameraZ = camera.position.z;
             camera.position.y = cameraY * Math.cos(angle) - cameraX * Math.sin(angle);
             camera.position.x = cameraY * Math.sin(angle) + cameraX * Math.cos(angle);
-            camera.lookAt(scene.position);
+            camera.lookAt(0,0,0);
         }
 
         //Task 7: Load the textures to apply to the cube
@@ -209,22 +209,22 @@
             var textureLoader = new THREE.TextureLoader();
             var materials = [
                 new THREE.MeshBasicMaterial({
-                    map: textureLoader.load(`arsenal1.png`)
+                    map: textureLoader.load(`Arsenal_Images/arsenal1.png`)
                 }),
                 new THREE.MeshBasicMaterial({
-                    map: textureLoader.load(`arsenal2.png`)
+                    map: textureLoader.load(`Arsenal_Images/arsenal2.png`)
                 }),
                 new THREE.MeshBasicMaterial({
-                    map: textureLoader.load(`arsenal3.png`)
+                    map: textureLoader.load(`Arsenal_Images/arsenal3.png`)
                 }),
                 new THREE.MeshBasicMaterial({
-                    map: textureLoader.load(`arsenal4.jpeg`)
+                    map: textureLoader.load(`Arsenal_Images/arsenal4.jpeg`)
                 }),
                 new THREE.MeshBasicMaterial({
-                    map: textureLoader.load(`arsenal5.jpeg`)
+                    map: textureLoader.load(`Arsenal_Images/arsenal5.jpeg`)
                 }),
                 new THREE.MeshBasicMaterial({
-                    map: textureLoader.load(`arsenal6.jpeg`)
+                    map: textureLoader.load(`Arsenal_Images/arsenal6.jpeg`)
                 }),
             ];
             return materials;
@@ -240,14 +240,14 @@
                     object.scale.set(0.5, 0.5, 0.5);
                     object.position.x -= 0.5;
                     scene.add(object);
-                    object.name = 'nameBunny';
+                    object.name = 'Bunny';
                 }
             )
         }
 
         //remove the bunny from the scene
         function removeBunny() {
-            scene.remove(scene.getObjectByName('nameBunny'));
+            scene.remove(scene.getObjectByName('Bunny'));
         }
 
         // Animation loop function. This function is called whenever an update is required.
