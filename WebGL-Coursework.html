@@ -54,7 +54,6 @@
             //TO DO: Draw a cube (requirement 1).
             createCube();
             createEdgesCube();
-
             createVerticesCube();
             scene.add(cube);
 
@@ -103,7 +102,7 @@
             window.addEventListener('resize', handleResize, false);
         }
 
-
+        //Task 1: create a cube
         function createCube() {
 
             var texture = new THREE.TextureLoader().load("arsenal1.png");
@@ -112,6 +111,7 @@
             cube = new THREE.Mesh(geometry, material);
         }
 
+        //Task 4: Create new cubes for different render modes
         function createEdgesCube() {
             var edgesGeometry = new THREE.EdgesGeometry(cube.geometry);
             edgesCube = new THREE.LineSegments(edgesGeometry);
@@ -164,6 +164,14 @@
             verticesCube.rotation.x += SPEED;
             verticesCube.rotation.y += SPEED;
             verticesCube.rotation.z += SPEED;
+        }
+
+        function rotateBunny() {
+            var SPEED = 0.02;
+            var object = scene.getObjectByName('nameBunny');
+            object.rotation.x += SPEED;
+            object.rotation.y += SPEED;
+            object.rotation.z += SPEED;
         }
 
         //Task 5: Translate the camera on a given axis
@@ -229,7 +237,7 @@
             bunny.load(
                 'bunny-5000.obj',
                 function (object) {
-                    object.scale.set(0.5,0.5,0.5);
+                    object.scale.set(0.5, 0.5, 0.5);
                     object.position.x -= 0.5;
                     scene.add(object);
                     object.name = 'nameBunny';
@@ -251,6 +259,7 @@
                 rotateCube();
                 rotateEdgesCube();
                 rotateVerticesCube();
+                rotateBunny();
             }
 
             // Render the current scene to the screen.
@@ -327,7 +336,7 @@
                     break;
 
                 case 66: //b = show bunny
-                    //scene.remove(cube);
+                    scene.remove(cube);
                     scene.remove(edgesCube);
                     scene.remove(verticesCube);
                     loadBunny();
