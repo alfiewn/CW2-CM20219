@@ -191,7 +191,7 @@
             var cameraZ = camera.position.z;
             camera.position.z = cameraZ * Math.cos(angle) - cameraX * Math.sin(angle);
             camera.position.x = cameraZ * Math.sin(angle) + cameraX * Math.cos(angle);
-            camera.lookAt(0,0,0);
+            camera.lookAt(0, 0, 0);
         }
 
         //Orbit the camera on the vertical axis
@@ -201,7 +201,7 @@
             var cameraZ = camera.position.z;
             camera.position.y = cameraY * Math.cos(angle) - cameraX * Math.sin(angle);
             camera.position.x = cameraY * Math.sin(angle) + cameraX * Math.cos(angle);
-            camera.lookAt(0,0,0);
+            camera.lookAt(0, 0, 0);
         }
 
         //Task 7: Load the textures to apply to the cube
@@ -251,6 +251,21 @@
         //remove the bunny from the scene
         function removeBunny() {
             scene.remove(scene.getObjectByName('Bunny'));
+        }
+
+        function loadEdgesBunny() {
+            var object = scene.getObjectByName('Bunny');
+            var geometry = new THREE.EdgesGeometry(object.geometry);
+
+            var material = new THREE.LineBasicMaterial({
+                color: 0xffffff
+            });
+
+            var wireframe = new THREE.LineSegments(geometry, material);
+
+            scene.add(wireframe);
+            removeBunny();
+
         }
 
         // Animation loop function. This function is called whenever an update is required.
@@ -342,7 +357,7 @@
                 //     scene.remove(cube);
                 //     scene.remove(edgesCube);
                 //     scene.remove(verticesCube);
-                //     loadBunny();
+                //     loadEdgesBunny();
                 //     break;
 
             }
