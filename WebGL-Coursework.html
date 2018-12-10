@@ -26,7 +26,7 @@
         // Global variables that are available in all functions.
         // Note: You can add your own here, e.g. to store the rendering mode.
         var camera, scene, renderer, mesh;
-        var cube, edgesCube, verticesCube, bunny, edgesBunny;
+        var cube, edgesCube, verticesCube, bunny, edgesBunny, verticesBunny;
         var shouldRotate = false;
 
         // Initialise the scene, and draw it for the first time.
@@ -55,10 +55,10 @@
             createEdgesCube();
             createVerticesCube();
             createBunny();
-            
+            //createVerticesBunny();
             //createEdgesBunny();
             scene.add(cube);
-            
+
 
             // TO DO: Visualise the axes of the global coordinate system (requirment 2).
             var material = new THREE.LineBasicMaterial({
@@ -103,12 +103,11 @@
             // Handle resizing of the browser window.
             window.addEventListener('resize', handleResize, false);
 
-            
+
         }
 
         //Task 1: create a cube
         function createCube() {
-
             var texture = new THREE.TextureLoader().load();
             var geometry = new THREE.BoxBufferGeometry(2, 2, 2);
             var material = (true) ? loadCubeTextures() : new THREE.MeshLambertMaterial();
@@ -132,7 +131,6 @@
                 new THREE.Vector3(1, 1, -1),
                 new THREE.Vector3(1, -1, -1),
                 new THREE.Vector3(-1, -1, -1),
-
                 new THREE.Vector3(-1, 1, 1),
                 new THREE.Vector3(-1, -1, 1),
                 new THREE.Vector3(1, -1, 1),
@@ -148,29 +146,12 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
-        //Task 3: Rotate the cube
-        function rotate(o){
+        //Task 3: Rotate any object
+        function rotate(o) {
             var SPEED = 0.02;
             o.rotation.x += SPEED;
             o.rotation.y += SPEED;
             o.rotation.z += SPEED;
-        }
-
-
-        function rotateBunny() {
-            var SPEED = 0.02;
-            var object = bunny;
-            object.rotation.x += SPEED;
-            object.rotation.y += SPEED;
-            object.rotation.z += SPEED;
-        }
-
-        function rotateEdgesBunny(){
-            var SPEED = 0.02;
-            var object = edgesBunny;
-            object.rotation.x += SPEED;
-            object.rotation.y += SPEED;
-            object.rotation.z += SPEED;
         }
 
         //Task 5: Translate the camera on a given axis
@@ -242,16 +223,12 @@
                     object.position.z -= 0.5;
                     bunny = object;
                 }
-            )
+            )      
         }
 
-        //remove the bunny from the scene
-        function removeBunny() {
-            scene.remove(bunny);
-        }
-
+        //Task 9: Create other render modes for the bunny
         function createEdgesBunny() {
-            
+  
             var bunGeom = bunny.children[0].geometry;
 
             var bunMat = new THREE.MeshBasicMaterial({
@@ -265,7 +242,22 @@
             edgesBunny.position.x -= 0.5;
             edgesBunny.position.y -= 0.5;
             edgesBunny.position.z -= 0.5;
-            
+
+        }
+
+        function createVerticesBunny() {
+            var bunnyGeometry = bunny.children[0].geometry;
+
+            var pointMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.02
+            });
+            verticesBunny = new THREE.Points(bunnyGeometry, pointMaterial);
+
+            verticesBunny.scale.set(0.4, 0.4, 0.4);
+            verticesBunny.position.x -= 0.5;
+            verticesBunny.position.y -= 0.5;
+            verticesBunny.position.z -= 0.5;
         }
 
         // Animation loop function. This function is called whenever an update is required.
@@ -274,14 +266,12 @@
 
             // TO DO: This is a good place for code that rotates your cube (requirement 3).
             if (shouldRotate) {
-                rotateBunny();
-                rotateEdgesBunny();
                 rotate(cube);
                 rotate(edgesCube);
                 rotate(verticesCube);
-                //rotate(bunny);
-                //rotate(edgesBunny);
-
+                rotate(bunny);
+                rotate(edgesBunny);
+                rotate(verticesBunny);
             }
 
             // Render the current scene to the screen.
@@ -357,17 +347,25 @@
 
                 case 66: //b = show faces bunny
                     scene.remove(edgesBunny);
-                    
+                    scene.remove(verticesBunny);
                     scene.add(bunny);
                     break;
-                
+
                 case 78: //n = show edges bunny
                     scene.remove(bunny);
+                    scene.remove(verticesBunny);
                     createEdgesBunny();
                     scene.add(edgesBunny);
+                    break;
+                
+                case 77: //m = show vertices bunny
+                    scene.remove(bunny);
+                    scene.remove(edgesBunny);
+                    createVerticesBunny();
+                    scene.add(verticesBunny);
+                    break;
             }
         }
     </script>
 </body>
-
 </html>
