@@ -57,8 +57,6 @@
             createVerticesCube();
             loadBunny();
             scene.add(cube);
-            
-            
 
 
             // TO DO: Visualise the axes of the global coordinate system (requirment 2).
@@ -171,7 +169,7 @@
 
         function rotateBunny() {
             var SPEED = 0.02;
-            var object = scene.getObjectByName('Bunny');
+            var object = bunny;
             object.rotation.x += SPEED;
             object.rotation.y += SPEED;
             object.rotation.z += SPEED;
@@ -235,9 +233,9 @@
 
         //Task 8: Load the bunny mesh model and add it to the scene
         function loadBunny() {
-            bunny = new THREE.OBJLoader();
+            var bunnyLoad = new THREE.OBJLoader();
 
-            bunny.load(
+            bunnyLoad.load(
                 'bunny-5000.obj',
                 function (object) {
                     object.scale.set(0.4, 0.4, 0.4);
@@ -245,7 +243,7 @@
                     object.position.y -= 0.5;
                     object.position.z -= 0.5;
                     scene.add(object);
-                    object.name = 'Bunny';
+                    bunny = object;
                 }
             )
         }
@@ -255,20 +253,26 @@
             scene.remove(scene.getObjectByName('Bunny'));
         }
 
-        function loadEdgesBunny() {
-            var object = scene.getObjectByName('Bunny');
-            var geometry = new THREE.Geometry(object.geometry);
+        function renderBunnyEdge() {
 
-            var material = new THREE.BasicMaterial({
+            var bunGeom = bunny.children[0].geometry;
+
+            var bunMat = new THREE.MeshBasicMaterial({
                 color: 0xffffff,
                 wireframe: true
             });
 
-            var wireframe = new THREE.LineSegments(geometry, material);
+            scene.remove(bunny);
 
-            scene.add(wireframe);
-            removeBunny();
+            bunny = new THREE.Mesh(bunGeom, bunMat);
 
+            bunny.scale.set(0.4, 0.4, 0.4);
+            bunny.position.x -= 0.5;
+            bunny.position.y -= 0.5;
+            bunny.position.z -= 0.5;
+            
+
+            scene.add(bunny);
         }
 
         // Animation loop function. This function is called whenever an update is required.
@@ -303,7 +307,7 @@
                     scene.remove(cube);
                     scene.remove(verticesCube);
                     scene.add(edgesCube);
-                    loadEdgesBunny();o
+                    renderBunnyEdge();
                     break;
 
                 case 86: // v = vertex
