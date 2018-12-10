@@ -55,8 +55,10 @@
             createCube();
             createEdgesCube();
             createVerticesCube();
-            scene.add(cube);
             loadBunny();
+            scene.add(cube);
+            
+            
 
 
             // TO DO: Visualise the axes of the global coordinate system (requirment 2).
@@ -255,10 +257,11 @@
 
         function loadEdgesBunny() {
             var object = scene.getObjectByName('Bunny');
-            var geometry = new THREE.EdgesGeometry(object.geometry);
+            var geometry = new THREE.Geometry(object.geometry);
 
-            var material = new THREE.LineBasicMaterial({
-                color: 0xffffff
+            var material = new THREE.BasicMaterial({
+                color: 0xffffff,
+                wireframe: true
             });
 
             var wireframe = new THREE.LineSegments(geometry, material);
@@ -300,6 +303,7 @@
                     scene.remove(cube);
                     scene.remove(verticesCube);
                     scene.add(edgesCube);
+                    loadEdgesBunny();o
                     break;
 
                 case 86: // v = vertex
