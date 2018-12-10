@@ -55,7 +55,7 @@
             createCube();
             createEdgesCube();
             createVerticesCube();
-            loadBunny();
+            createBunny();
             scene.add(cube);
 
 
@@ -232,7 +232,7 @@
         }
 
         //Task 8: Load the bunny mesh model and add it to the scene
-        function loadBunny() {
+        function createBunn() {
             var bunnyLoad = new THREE.OBJLoader();
 
             bunnyLoad.load(
@@ -250,10 +250,10 @@
 
         //remove the bunny from the scene
         function removeBunny() {
-            scene.remove(scene.getObjectByName('Bunny'));
+            scene.remove(bunny);
         }
 
-        function renderBunnyEdge() {
+        function createEdgesBunny() {
 
             var bunGeom = bunny.children[0].geometry;
 
@@ -262,7 +262,7 @@
                 wireframe: true
             });
 
-            scene.remove(bunny);
+            removeBunny();
 
             bunny = new THREE.Mesh(bunGeom, bunMat);
 
@@ -307,7 +307,7 @@
                     scene.remove(cube);
                     scene.remove(verticesCube);
                     scene.add(edgesCube);
-                    renderBunnyEdge();
+                    createEdgesBunny();
                     break;
 
                 case 86: // v = vertex
