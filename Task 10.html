@@ -50,7 +50,7 @@
             camera.lookAt(new THREE.Vector3(0, 0, 0));
 
             // Draw a helper grid in the x-z plane (note: y is up).
-            scene.add(new THREE.GridHelper(10, 20, 0xffffff));
+            //scene.add(new THREE.GridHelper(10, 20, 0xffffff));
 
             // TO DO: Draw a cube (requirement 1).
             // TO DO: Visualise the axes of the global coordinate system (requirment 2).
@@ -80,27 +80,27 @@
 
         function loadFootball() {
 
-            var loadBall = new THREE.OBJLoader();
+            //var loadBall = new THREE.OBJLoader();
             var texture = new THREE.TextureLoader().load('football.jpg');
-            var material = new THREE.MeshLambertMaterial({
+            var material = new THREE.MeshBasicMaterial({
                 map: texture
             });
+            var geometry =  new THREE.SphereGeometry( 1, 32, 32 );
+            // loadBall.load(
+            //     'Ball OBJ.obj',
+            //     function (object) {
+            //         object.scale.set(0.25, 0.25, 0.25);
+            //         object.position.y += 0.5;
+                    
+                    
+            //         var object = new THREE.mesh(object.children[0].geometry, material)
+            //         scene.add(object);
+            //     })
 
-            loadBall.load(
-                'Ball OBJ.obj',
-                function (object) {
-                    object.scale.set(0.25, 0.25, 0.25);
-                    object.position.y += 0.5;
-                    object.traverse(function (child) {
-                        if (child instanceof THREE.Mesh) {
-                            child.material = material;
-                        }
-                    });
-                    scene.add(object);
-                    ball = object;
-                }
-
-            )
+            ball = new THREE.Mesh(geometry, material);
+            ball.scale.set(0.25, 0.25, 0.25);
+            ball.position.y += 0.25;
+            scene.add(ball);
 
         }
 
