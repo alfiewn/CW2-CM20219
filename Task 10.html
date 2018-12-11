@@ -22,12 +22,19 @@
             background-color: black;
             color: white;
         }
+
+        p {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: black;
+            color: white;
+            margin: 0;
+        }
     </style>
 </head>
 
 <body>
-    <h1 >Task 10: A simple football game</h1>
-    
+    <h1>Task 10: A simple football game</h1>
+    <p>Use the left and right arrows to decide the direction, the up arrow to decide the height, then press S to shoot</p>
     <script src="three.js"></script>
     <script src="OBJLoader.js"></script>
     <script>
@@ -36,6 +43,9 @@
         // Global variables that are available in all functions.
         // Note: You can add your own here, e.g. to store the rendering mode.
         var camera, scene, renderer, mesh, ball;
+        var shoot = false;
+        var direction = 0;
+        var height = 0;
 
         // Initialise the scene, and draw it for the first time.
         init();
@@ -56,7 +66,7 @@
 
             // Set up the camera, move it to (3, 4, 5) and look at the origin (0, 0, 0).
             camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.set(6, 3, 0);
+            camera.position.set(8, 3, 0);
             camera.lookAt(new THREE.Vector3(0, 0, 0));
 
             // Draw a helper grid in the x-z plane (note: y is up).
@@ -98,7 +108,7 @@
             var geometry = new THREE.SphereGeometry(1, 32, 32);
             ball = new THREE.Mesh(geometry, material);
             ball.scale.set(0.25, 0.25, 0.25);
-            ball.position.y += 0.25;
+            ball.position.set(4,0.25,0);
             scene.add(ball);
 
         }
@@ -179,10 +189,10 @@
                 side: THREE.DoubleSide
             });
             var plane = new THREE.Mesh(geometry, material);
-            plane.rotateY(Math.PI/2);
+            plane.rotateY(Math.PI / 2);
             plane.rotateX(0.58800260354610889291)
-            plane.position.x-=3.5;
-            plane.position.y+=0.75;
+            plane.position.x -= 3.5;
+            plane.position.y += 0.75;
             scene.add(plane);
 
         }
@@ -204,8 +214,8 @@
         }
 
 
-         function rotate(o) {
-            var SPEED = 0.5;
+        function rotate(o) {
+            var SPEED = 0.05;
             o.rotation.x += SPEED;
             o.rotation.y += SPEED;
             o.rotation.z += SPEED;
@@ -215,6 +225,25 @@
         function animate() {
             requestAnimationFrame(animate);
 
+
+            if (shoot) {
+                rotate(ball);
+                ball.position.x -= 0.1;
+                ball.position.z += direction;
+                ball.position.y += height;
+                if (ball.position.x < -3) {
+                    shoot = false;
+                    if (ball.position.z < 3 && ball.position.z > -3 && ball.position.y<1.5) {
+                        window.alert('Goal!');
+                    } else {
+                        window.alert('You missed! Try again.')
+                    }
+                    ball.position.set(4,0.25,0);
+                    direction = 0;
+                    height = 0;
+                }
+            }
+
             // Render the current scene to the screen.
             renderer.render(scene, camera);
         }
@@ -223,34 +252,29 @@
         function handleKeyDown(event) {
             switch (event.keyCode) {
 
-                case 38: //up arrow = move forwards
-                    ball.position.x -= 0.5;
-                    rotate(ball);
-                    if (ball.position.x < -3) {
-                        ball.position.x += 0.5;
-                        if (ball.position.z < 3 && ball.position.z > -3) {
-                            window.alert('Goal!');
-                        } else {
-                            window.alert('Out')
-                        }
-
+                case 37: //left arrow = move left
+                    if(direction<0.1){
+                        direction += 0.01;
                     }
                     break;
 
-                case 40: //down arrow = move backwards
-                    ball.position.x += 0.5;
-                    rotate(ball);
-                    break;
-
-                case 37: //left arrow = move left
-                    ball.position.z += 0.5;
-                    rotate(ball);
-                    break;
-
                 case 39: //right arrow = move right
-                    ball.position.z -= 0.5;
-                    rotate(ball);
+                    if(direction>-0.1){
+                        direction -= 0.01;
+                    }
                     break;
+
+                case 38: //up arrow
+                    if(height<0.025){
+                        height+=0.005
+                    }
+                    break;
+
+                case 83: //s = shoot
+                    shoot = !shoot;
+                    break;
+
+                
             }
         }
     </script>
