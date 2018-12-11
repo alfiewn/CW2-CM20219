@@ -222,6 +222,7 @@
                     object.position.y -= 0.5;
                     object.position.z -= 0.5;
                     bunny = object;
+                
                 }
             )      
         }
@@ -306,27 +307,27 @@
                     break;
 
                 case 68: //d = move right
-                    translateCameraOnAxis(new THREE.Vector3(1, 0, 0), 1);
+                    translateCameraOnAxis(new THREE.Vector3(1, 0, 0), 0.5);
                     break;
 
                 case 65: //a = move left
-                    translateCameraOnAxis(new THREE.Vector3(1, 0, 0), -1);
+                    translateCameraOnAxis(new THREE.Vector3(1, 0, 0), -0.5);
                     break;
 
                 case 87: //w = move up
-                    translateCameraOnAxis(new THREE.Vector3(0, 1, 0), 1);
+                    translateCameraOnAxis(new THREE.Vector3(0, 1, 0), 0.5);
                     break;
 
                 case 83: //s = move down
-                    translateCameraOnAxis(new THREE.Vector3(0, 1, 0), -1);
+                    translateCameraOnAxis(new THREE.Vector3(0, 1, 0), -0.5);
                     break;
 
                 case 38: //down arrow = move backwards
-                    translateCameraOnAxis(new THREE.Vector3(0, 0, 1), -1);
+                    translateCameraOnAxis(new THREE.Vector3(0, 0, 1), -0.5);
                     break;
 
                 case 40: //up arrow = move forwards
-                    translateCameraOnAxis(new THREE.Vector3(0, 0, 1), 1);
+                    translateCameraOnAxis(new THREE.Vector3(0, 0, 1), 0.5);
                     break;
 
                 case 73: //i = orbit vertically up
