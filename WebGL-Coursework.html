@@ -26,7 +26,8 @@
         // Note: You can add your own here, e.g. to store the rendering mode.
         var camera, scene, renderer, mesh;
         var cube, edgesCube, verticesCube, bunny, edgesBunny, verticesBunny;
-        var shouldRotate = false;
+        var shouldRotate, rotateEdgesBunny, rotateVerticesBunny = false;
+
         var lookAtVector = new THREE.Vector3(0,0,0);
 
         // Initialise the scene, and draw it for the first time.
@@ -258,7 +259,9 @@
 
         //Task 9: Create other render modes for the bunny
         function createEdgesBunny() {
-  
+            
+            if(!rotateEdgesBunny) rotateEdgesBunny = true;
+
             var bunGeom = bunny.children[0].geometry;
 
             var bunMat = new THREE.MeshBasicMaterial({
@@ -276,6 +279,8 @@
         }
 
         function createVerticesBunny() {
+            if(!rotateVerticesBunny) rotateVerticesBunny = true;
+
             var bunnyGeometry = bunny.children[0].geometry;
 
             var pointMaterial = new THREE.PointsMaterial({
@@ -300,8 +305,8 @@
                 rotate(edgesCube);
                 rotate(verticesCube);
                 rotate(bunny);
-                rotate(edgesBunny);
-                rotate(verticesBunny);
+                if(rotateEdgesBunny) rotate(edgesBunny);
+                if(rotateVerticesBunny) rotate(verticesBunny);
             }
 
             // Render the current scene to the screen.
