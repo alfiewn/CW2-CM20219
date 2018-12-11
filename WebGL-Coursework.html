@@ -28,6 +28,7 @@
         var camera, scene, renderer, mesh;
         var cube, edgesCube, verticesCube, bunny, edgesBunny, verticesBunny;
         var shouldRotate = false;
+        var lookAtVector = new THREE.Vector3(0,0,0);
 
         // Initialise the scene, and draw it for the first time.
         init();
@@ -89,7 +90,13 @@
             scene.add(line);
 
             // Basic ambient lighting.
-            scene.add(new THREE.AmbientLight(0xffffff));
+            //scene.add(new THREE.AmbientLight(0xffffff));
+            var dirLight = new THREE.DirectionalLight(0xffff00)
+            dirLight.position.set(5,5,5);
+            scene.add(dirLight);
+
+
+
             // TO DO: add more complex lighting for 'face' rendering mode (requirement 4).
 
             // Set up the Web GL renderer.
@@ -158,30 +165,56 @@
         function translateCameraOnAxis(axisVector, amount) {
             var cameraRotation = camera.quaternion; // camera's local rotation as a quaternion
             axisVector.applyQuaternion(cameraRotation); // apply the rotation to the z axis
-            camera.position.add(axisVector.multiplyScalar(amount)); // add the resulting vector to the camera's position
+            camera.position.add(axisVector.multiplyScalar(amount));// add the resulting vector to the camera's position
         }
 
         //Task 6: Orbit the camera around the cube
 
         //Orbit the camera on the horizontal axis
-        function orbitCameraHorizontal(angle) {
-            var cameraX = camera.position.x;
-            var cameraY = camera.position.y;
-            var cameraZ = camera.position.z;
-            camera.position.z = cameraZ * Math.cos(angle) - cameraX * Math.sin(angle);
-            camera.position.x = cameraZ * Math.sin(angle) + cameraX * Math.cos(angle);
-            camera.lookAt(0, 0, 0);
-        }
+        function orbitLeft() {
+                var spherical = new THREE.Spherical;
 
-        //Orbit the camera on the vertical axis
-        function orbitCameraVertical(angle) {
-            var cameraX = camera.position.x;
-            var cameraY = camera.position.y;
-            var cameraZ = camera.position.z;
-            camera.position.y = cameraY * Math.cos(angle) - cameraX * Math.sin(angle);
-            camera.position.x = cameraY * Math.sin(angle) + cameraX * Math.cos(angle);
-            camera.lookAt(0, 0, 0);
-        }
+                spherical.setFromVector3(camera.position);
+                spherical.theta = spherical.theta - 0.1;
+                spherical.makeSafe();
+                camera.position.setFromSpherical(spherical);
+                camera.position.add(lookAtVector);
+                camera.lookAt(lookAtVector);
+            }
+
+            function orbitRight() {
+                var spherical = new THREE.Spherical;
+
+                spherical.setFromVector3(camera.position);
+                spherical.theta = spherical.theta + 0.1;
+                spherical.makeSafe();
+                camera.position.setFromSpherical(spherical);
+                camera.position.add(lookAtVector);
+                camera.lookAt(lookAtVector);
+            }
+
+            function orbitUp() {
+                var spherical = new THREE.Spherical;
+
+                spherical.setFromVector3(camera.position);
+                spherical.phi = spherical.phi - 0.1;
+                spherical.makeSafe();
+                camera.position.setFromSpherical(spherical);
+                camera.position.add(lookAtVector);
+                camera.lookAt(lookAtVector);
+
+            }
+
+            function orbitDown() {
+                var spherical = new THREE.Spherical;
+
+                spherical.setFromVector3(camera.position);
+                spherical.phi = spherical.phi + 0.1;
+                spherical.makeSafe();
+                camera.position.setFromSpherical(spherical);
+                camera.position.add(lookAtVector);
+                camera.lookAt(lookAtVector);
+            }
 
         //Task 7: Load the textures to apply to the cube
         function loadCubeTextures() {
@@ -331,19 +364,19 @@
                     break;
 
                 case 73: //i = orbit vertically up
-                    orbitCameraVertical(-0.05);
+                    orbitUp();
                     break;
 
                 case 75: //k = orbit vertically down
-                    orbitCameraVertical(0.05);
+                    orbitDown();
                     break;
 
                 case 74: //j = orbit horzontally negative
-                    orbitCameraHorizontal(-0.05);
+                    orbitLeft();
                     break;
 
                 case 76: //l = orbit horizontally positive
-                    orbitCameraHorizontal(0.05);
+                    orbitRight();
                     break;
 
                 case 66: //b = show faces bunny

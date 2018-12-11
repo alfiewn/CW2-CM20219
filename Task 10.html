@@ -40,33 +40,9 @@
             scene = new THREE.Scene();
 
             loadFootball();
-            
-            var material = new THREE.LineBasicMaterial({
-                color: 0xffffff
-            });
-            var geometry = new THREE.Geometry();
-            geometry.vertices.push(new THREE.Vector3(-3, 0, -3));
-            geometry.vertices.push(new THREE.Vector3(-3, 1.5, -3));
-            var line = new THREE.Line(geometry, material);
-            scene.add(line);
+            drawGoal();
+            createPlane();
 
-            var material = new THREE.LineBasicMaterial({
-                color: 0xffffff
-            });
-            var geometry = new THREE.Geometry();
-            geometry.vertices.push(new THREE.Vector3(-3, 0, 3));
-            geometry.vertices.push(new THREE.Vector3(-3, 1.5, 3));
-            var line = new THREE.Line(geometry, material);
-            scene.add(line);
-
-            var material = new THREE.LineBasicMaterial({
-                color: 0xffffff
-            });
-            var geometry = new THREE.Geometry();
-            geometry.vertices.push(new THREE.Vector3(-3, 1.5, -3));
-            geometry.vertices.push(new THREE.Vector3(-3, 1.5, 3));
-            var line = new THREE.Line(geometry, material);
-            scene.add(line);
 
             // Set up the camera, move it to (3, 4, 5) and look at the origin (0, 0, 0).
             camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -105,12 +81,21 @@
         function loadFootball() {
 
             var loadBall = new THREE.OBJLoader();
+            var texture = new THREE.TextureLoader().load('football.jpg');
+            var material = new THREE.MeshLambertMaterial({
+                map: texture
+            });
 
             loadBall.load(
                 'Ball OBJ.obj',
                 function (object) {
-                    object.scale.set(0.5, 0.5, 0.5);
+                    object.scale.set(0.25, 0.25, 0.25);
                     object.position.y += 0.5;
+                    object.traverse(function (child) {
+                        if (child instanceof THREE.Mesh) {
+                            child.material = material;
+                        }
+                    });
                     scene.add(object);
                     ball = object;
                 }
@@ -119,14 +104,110 @@
 
         }
 
+
+        function drawGoal() {
+            var material = new THREE.LineBasicMaterial({
+                color: 0xffffff
+            });
+            var geometry = new THREE.Geometry();
+            geometry.vertices.push(new THREE.Vector3(-3, 0, -3));
+            geometry.vertices.push(new THREE.Vector3(-3, 1.5, -3));
+            var line = new THREE.Line(geometry, material);
+            scene.add(line);
+
+            var material = new THREE.LineBasicMaterial({
+                color: 0xffffff
+            });
+            var geometry = new THREE.Geometry();
+            geometry.vertices.push(new THREE.Vector3(-3, 0, 3));
+            geometry.vertices.push(new THREE.Vector3(-3, 1.5, 3));
+            var line = new THREE.Line(geometry, material);
+            scene.add(line);
+
+            var material = new THREE.LineBasicMaterial({
+                color: 0xffffff
+            });
+            var geometry = new THREE.Geometry();
+            geometry.vertices.push(new THREE.Vector3(-3, 1.5, -3));
+            geometry.vertices.push(new THREE.Vector3(-3, 1.5, 3));
+            var line = new THREE.Line(geometry, material);
+            scene.add(line);
+
+            var material = new THREE.LineBasicMaterial({
+                color: 0xffffff
+            });
+            var geometry = new THREE.Geometry();
+            geometry.vertices.push(new THREE.Vector3(-4, 0.01, 3));
+            geometry.vertices.push(new THREE.Vector3(-3, 0.01, 3));
+            var line = new THREE.Line(geometry, material);
+            scene.add(line);
+
+            var material = new THREE.LineBasicMaterial({
+                color: 0xffffff
+            });
+            var geometry = new THREE.Geometry();
+            geometry.vertices.push(new THREE.Vector3(-4, 0.01, -3));
+            geometry.vertices.push(new THREE.Vector3(-3, 0.01, -3));
+            var line = new THREE.Line(geometry, material);
+            scene.add(line);
+
+            var material = new THREE.LineBasicMaterial({
+                color: 0xffffff
+            });
+            var geometry = new THREE.Geometry();
+            geometry.vertices.push(new THREE.Vector3(-4, 0.01, 3));
+            geometry.vertices.push(new THREE.Vector3(-4, 0.01, -3));
+            var line = new THREE.Line(geometry, material);
+            scene.add(line);
+
+            var material = new THREE.LineBasicMaterial({
+                color: 0xffffff
+            });
+            var geometry = new THREE.Geometry();
+            geometry.vertices.push(new THREE.Vector3(-4, 0.01, 3));
+            geometry.vertices.push(new THREE.Vector3(-4, 0.01, -3));
+            var line = new THREE.Line(geometry, material);
+            scene.add(line);
+
+            var material = new THREE.LineBasicMaterial({
+                color: 0xffffff
+            });
+            var geometry = new THREE.Geometry();
+            geometry.vertices.push(new THREE.Vector3(-4, 0.01, -3));
+            geometry.vertices.push(new THREE.Vector3(-3, 1.5, -3));
+            var line = new THREE.Line(geometry, material);
+            scene.add(line);
+
+            var material = new THREE.LineBasicMaterial({
+                color: 0xffffff
+            });
+            var geometry = new THREE.Geometry();
+            geometry.vertices.push(new THREE.Vector3(-4, 0.01, 3));
+            geometry.vertices.push(new THREE.Vector3(-3, 1.5, 3));
+            var line = new THREE.Line(geometry, material);
+            scene.add(line);
+            
+        }
+
+
+        function createPlane() {
+            var texture = new THREE.TextureLoader().load('grass.jpg');
+
+            var geometry = new THREE.PlaneGeometry(10, 10, 2);
+            var material = new THREE.MeshBasicMaterial({
+                map: texture,
+                side: THREE.DoubleSide
+            });
+            var plane = new THREE.Mesh(geometry, material);
+            plane.rotateX(Math.PI / 2);
+            scene.add(plane);
+
+
+        }
+
         // Animation loop function. This function is called whenever an update is required.
         function animate() {
             requestAnimationFrame(animate);
-
-            // TO DO: This is a good place for code that rotates your cube (requirement 3).
-
-            
-
 
             // Render the current scene to the screen.
             renderer.render(scene, camera);
@@ -137,28 +218,28 @@
             switch (event.keyCode) {
 
                 case 38: //down arrow = move backwards
-                    ball.position.x -= 0.1;
-                    if(ball.position.x<-3){
-                        if(ball.position.z<3 && ball.position.z>-3){
-                            window.alert('Goal'); 
-                        }else{
+                    ball.position.x -= 0.5;
+                    if (ball.position.x < -3) {
+                        if (ball.position.z < 3 && ball.position.z > -3) {
+                            window.alert('Goal');
+                        } else {
                             window.alert('Out')
                         }
-                       
+
                     }
                     break;
 
                 case 40: //up arrow = move forwards
-                    ball.position.x += 0.1;
-                    
+                    ball.position.x += 0.5;
+
                     break;
 
                 case 37: //left arrow = move left
-                    ball.position.z += 0.1;
+                    ball.position.z += 0.5;
                     break;
 
                 case 39: //right arrow = move right
-                    ball.position.z -= 0.1;
+                    ball.position.z -= 0.5;
                     break;
             }
         }
