@@ -163,14 +163,14 @@
 
             var texture = new THREE.TextureLoader().load('net.jpg');
 
-            var geometry = new THREE.PlaneGeometry(6, 1.8);
+            var geometry = new THREE.PlaneGeometry(6, 1.8027756377319948);
             var material = new THREE.MeshBasicMaterial({
                 map: texture,
                 side: THREE.DoubleSide
             });
             var plane = new THREE.Mesh(geometry, material);
             plane.rotateY(Math.PI/2);
-            plane.rotateX(0.57)
+            plane.rotateX(0.58800260354610889291)
             plane.position.x-=3.5;
             plane.position.y+=0.75;
             scene.add(plane);
