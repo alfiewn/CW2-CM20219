@@ -106,7 +106,7 @@
         window.onload = function () {
             name = prompt("What's your name?");
             document.getElementById('output').innerHTML = "Hi " + name +
-                "! Use the left and right arrows to decide the direction, the up arrow to decide the height, then press S to shoot";
+                "! Use the left and right arrows to decide the direction, the up arrow to decide the height, then press S to shoot. Score 3 goals to win.";
             document.getElementById('score').innerHTML = "Score: " + score;
         };
 
@@ -240,6 +240,10 @@
             o.rotation.z += SPEED;
         }
 
+        function updateScore(newScore){
+            document.getElementById('score').innerHTML = 'Score: ' + newScore;
+        }
+
         // Animation loop function. This function is called whenever an update is required.
         function animate() {
             requestAnimationFrame(animate);
@@ -255,10 +259,12 @@
                     if (ball.position.z < 3 && ball.position.z > -3 && ball.position.y < 1.5) {
                         window.alert('Goal!');
                         score++;
-                        document.getElementById('score').innerHTML = 'Score: ' + score;
+                        updateScore(score);
+                        
                         if(score == 3){
                             window.alert('Well done ' + name + '! You win!')
                             score = 0;
+                            updateScore(score);
                         }
                     } else {
                         window.alert('You missed! Try again.')
