@@ -33,8 +33,13 @@
 </head>
 
 <body>
-    <h1>Task 10: A simple football game</h1>
-    <p>Use the left and right arrows to decide the direction, the up arrow to decide the height, then press S to shoot</p>
+    <div>
+        <h1>Task 10: A simple football game</h1>
+        <p id="output"></p>
+        <p id="score" ></p>
+    </div>
+
+
     <script src="three.js"></script>
     <script src="OBJLoader.js"></script>
     <script>
@@ -46,6 +51,8 @@
         var shoot = false;
         var direction = 0;
         var height = 0;
+        var score = 0;
+        var name;
 
         // Initialise the scene, and draw it for the first time.
         init();
@@ -57,6 +64,9 @@
 
         // Scene initialisation. This function is only run once, at the very beginning.
         function init() {
+
+
+
             scene = new THREE.Scene();
 
             loadFootball();
@@ -89,7 +99,16 @@
 
             // Handle resizing of the browser window.
             window.addEventListener('resize', handleResize, false);
+
+
         }
+
+        window.onload = function () {
+            name = prompt("What's your name?");
+            document.getElementById('output').innerHTML = "Hi " + name +
+                "! Use the left and right arrows to decide the direction, the up arrow to decide the height, then press S to shoot";
+            document.getElementById('score').innerHTML = "Score: " + score;
+        };
 
         // Handle resizing of the browser window.
         function handleResize() {
@@ -108,7 +127,7 @@
             var geometry = new THREE.SphereGeometry(1, 32, 32);
             ball = new THREE.Mesh(geometry, material);
             ball.scale.set(0.25, 0.25, 0.25);
-            ball.position.set(4,0.25,0);
+            ball.position.set(4, 0.25, 0);
             scene.add(ball);
 
         }
@@ -233,12 +252,18 @@
                 ball.position.y += height;
                 if (ball.position.x < -3) {
                     shoot = false;
-                    if (ball.position.z < 3 && ball.position.z > -3 && ball.position.y<1.5) {
+                    if (ball.position.z < 3 && ball.position.z > -3 && ball.position.y < 1.5) {
                         window.alert('Goal!');
+                        score++;
+                        document.getElementById('score').innerHTML = 'Score: ' + score;
+                        if(score == 3){
+                            window.alert('Well done ' + name + '! You win!')
+                            score = 0;
+                        }
                     } else {
                         window.alert('You missed! Try again.')
                     }
-                    ball.position.set(4,0.25,0);
+                    ball.position.set(4, 0.25, 0);
                     direction = 0;
                     height = 0;
                 }
@@ -253,20 +278,20 @@
             switch (event.keyCode) {
 
                 case 37: //left arrow = move left
-                    if(direction<0.1){
+                    if (direction < 0.1) {
                         direction += 0.01;
                     }
                     break;
 
                 case 39: //right arrow = move right
-                    if(direction>-0.1){
+                    if (direction > -0.1) {
                         direction -= 0.01;
                     }
                     break;
 
                 case 38: //up arrow
-                    if(height<0.025){
-                        height+=0.005
+                    if (height < 0.025) {
+                        height += 0.005
                     }
                     break;
 
@@ -274,7 +299,7 @@
                     shoot = !shoot;
                     break;
 
-                
+
             }
         }
     </script>
