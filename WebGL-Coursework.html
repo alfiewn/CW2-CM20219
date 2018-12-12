@@ -9,7 +9,6 @@
             margin: 0;
             overflow: hidden;
         }
-
         canvas {
             width: 100%;
             height: 100%;
@@ -26,7 +25,7 @@
         // Global variables that are available in all functions.
         // Note: You can add your own here, e.g. to store the rendering mode.
         var camera, scene, renderer, mesh;
-        var cube, edgesCube, verticesCube, bunny, edgesBunny, verticesBunny;
+        var cube, edgesCube, verticesCube, texturesCube, bunny, edgesBunny, verticesBunny;
         var shouldRotate, rotateEdgesBunny, rotateVerticesBunny = false;
 
         var lookAtVector = new THREE.Vector3(0, 0, 0);
@@ -56,6 +55,7 @@
             createCube();
             createEdgesCube();
             createVerticesCube();
+            createTexturesCube();
             createBunny();
             scene.add(cube);
 
@@ -115,12 +115,20 @@
 
         }
 
-        //Task 1: create a cube
+        //Task 1: create a cube/Task 7: Cube with textures mapped
         function createCube() {
             var texture = new THREE.TextureLoader().load();
             var geometry = new THREE.BoxBufferGeometry(2, 2, 2);
-            var material = (true) ? loadCubeTextures() : new THREE.MeshLambertMaterial();
+            //var material = (true) ? loadCubeTextures() : new THREE.MeshLambertMaterial();
+            var material = new THREE.MeshLambertMaterial();
             cube = new THREE.Mesh(geometry, material);
+        }
+
+        function createTexturesCube() {
+            var texture = new THREE.TextureLoader().load();
+            var texturesGeometry = new THREE.BoxBufferGeometry(2, 2, 2);
+            var material = (true) ? loadCubeTextures() : new THREE.MeshLambertMaterial();
+            texturesCube = new THREE.Mesh(texturesGeometry, material);
         }
 
         //Task 4: Create new cubes for different render modes
@@ -309,6 +317,7 @@
                 rotate(cube);
                 rotate(edgesCube);
                 rotate(verticesCube);
+                rotate(texturesCube);
                 rotate(bunny);
                 //rotate if the bunnys have been loading
                 if (rotateEdgesBunny) rotate(edgesBunny);
@@ -324,22 +333,31 @@
             switch (event.keyCode) {
                 // Render modes.
                 case 70: // f = face
-
+                    scene.remove(texturesCube);
                     scene.remove(edgesCube);
                     scene.remove(verticesCube);
                     scene.add(cube);
                     break;
 
                 case 69: // e = edge
+                    scene.remove(texturesCube);
                     scene.remove(cube);
                     scene.remove(verticesCube);
                     scene.add(edgesCube);
                     break;
 
                 case 86: // v = vertex
+                    scene.remove(texturesCube);
                     scene.remove(cube);
                     scene.remove(edgesCube);
                     scene.add(verticesCube);
+                    break;
+
+                case 84: //t = show textures cube
+                    scene.remove(cube);
+                    scene.remove(edgesCube);
+                    scene.remove(verticesCube);
+                    scene.add(texturesCube);
                     break;
 
                 case 82: //r = rotate
