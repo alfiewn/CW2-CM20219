@@ -120,7 +120,7 @@
         function loadFootball() {
 
             //var loadBall = new THREE.OBJLoader();
-            var texture = new THREE.TextureLoader().load('football.jpg');
+            var texture = new THREE.TextureLoader().load('Textures/football.jpg');
             var material = new THREE.MeshBasicMaterial({
                 map: texture
             });
@@ -200,7 +200,7 @@
             var line = new THREE.Line(geometry, material);
             scene.add(line);
 
-            var texture = new THREE.TextureLoader().load('net.jpg');
+            var texture = new THREE.TextureLoader().load('Textures/net.jpg');
 
             var geometry = new THREE.PlaneGeometry(6, 1.8027756377319948);
             var material = new THREE.MeshBasicMaterial({
@@ -218,7 +218,7 @@
 
 
         function createPlane() {
-            var texture = new THREE.TextureLoader().load('grass.jpg');
+            var texture = new THREE.TextureLoader().load('Textures/grass.jpg');
 
             var geometry = new THREE.PlaneGeometry(10, 10, 2);
             var material = new THREE.MeshBasicMaterial({

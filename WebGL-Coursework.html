@@ -183,7 +183,6 @@
         //Orbit the camera on the horizontal axis
         function orbitLeft() {
             var spherical = new THREE.Spherical;
-
             spherical.setFromVector3(camera.position);
             spherical.theta = spherical.theta - 0.1;
             spherical.makeSafe();
@@ -230,22 +229,22 @@
             var textureLoader = new THREE.TextureLoader();
             var materials = [
                 new THREE.MeshBasicMaterial({
-                    map: textureLoader.load(`Arsenal_Images/arsenal1.png`)
+                    map: textureLoader.load(`Textures/arsenal1.png`)
                 }),
                 new THREE.MeshBasicMaterial({
-                    map: textureLoader.load(`Arsenal_Images/arsenal2.png`)
+                    map: textureLoader.load(`Textures/arsenal2.png`)
                 }),
                 new THREE.MeshBasicMaterial({
-                    map: textureLoader.load(`Arsenal_Images/arsenal3.png`)
+                    map: textureLoader.load(`Textures/arsenal3.png`)
                 }),
                 new THREE.MeshBasicMaterial({
-                    map: textureLoader.load(`Arsenal_Images/arsenal4.jpeg`)
+                    map: textureLoader.load(`Textures/arsenal4.jpeg`)
                 }),
                 new THREE.MeshBasicMaterial({
-                    map: textureLoader.load(`Arsenal_Images/arsenal5.jpeg`)
+                    map: textureLoader.load(`Textures/arsenal5.jpeg`)
                 }),
                 new THREE.MeshBasicMaterial({
-                    map: textureLoader.load(`Arsenal_Images/arsenal6.jpeg`)
+                    map: textureLoader.load(`Textures/arsenal6.jpeg`)
                 }),
             ];
             return materials;
