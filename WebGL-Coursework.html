@@ -9,6 +9,7 @@
             margin: 0;
             overflow: hidden;
         }
+
         canvas {
             width: 100%;
             height: 100%;
@@ -119,7 +120,6 @@
         function createCube() {
             var texture = new THREE.TextureLoader().load();
             var geometry = new THREE.BoxBufferGeometry(2, 2, 2);
-            //var material = (true) ? loadCubeTextures() : new THREE.MeshLambertMaterial();
             var material = new THREE.MeshLambertMaterial();
             cube = new THREE.Mesh(geometry, material);
         }
@@ -138,21 +138,12 @@
         }
 
         function createVerticesCube() {
-            var verticesGeometry = new THREE.Geometry();
+            var verticesGeometry = new THREE.BoxBufferGeometry(2, 2, 2);
             var newMaterial = new THREE.PointsMaterial({
                 color: 0xffffff,
-                size: 0.1
+                size: 0.2
             });
-            verticesGeometry.vertices.push(
-                new THREE.Vector3(1, 1, 1),
-                new THREE.Vector3(1, 1, -1),
-                new THREE.Vector3(1, -1, -1),
-                new THREE.Vector3(-1, -1, -1),
-                new THREE.Vector3(-1, 1, 1),
-                new THREE.Vector3(-1, -1, 1),
-                new THREE.Vector3(1, -1, 1),
-                new THREE.Vector3(-1, 1, -1)
-            );
+
             verticesCube = new THREE.Points(verticesGeometry, newMaterial)
         }
 

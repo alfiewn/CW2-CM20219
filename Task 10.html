@@ -219,7 +219,6 @@
 
         function createPlane() {
             var texture = new THREE.TextureLoader().load('Textures/grass.jpg');
-
             var geometry = new THREE.PlaneGeometry(10, 10, 2);
             var material = new THREE.MeshBasicMaterial({
                 map: texture,
@@ -228,8 +227,6 @@
             var plane = new THREE.Mesh(geometry, material);
             plane.rotateX(Math.PI / 2);
             scene.add(plane);
-
-
         }
 
 
